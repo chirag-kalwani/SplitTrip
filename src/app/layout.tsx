@@ -1,5 +1,5 @@
 import './globals.css'
-import {Inter} from 'next/font/google'
+import {Inter, Nabla, Style_Script} from 'next/font/google'
 import {ReactNode} from "react";
 
 const inter = Inter({subsets: ['latin']})
@@ -16,7 +16,9 @@ interface RootLayoutProps {
 export default function RootLayout({children}: RootLayoutProps) {
     return (
         <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+        {children}
+        </body>
         </html>
     )
 }

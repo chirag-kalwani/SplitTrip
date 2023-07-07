@@ -8,8 +8,6 @@ export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json();
         const {userName, email, password} = reqBody;
-        console.log(reqBody);
-
         // check if user is already exist
         const user = await User.findOne({email: email});
         if (user) {
@@ -28,14 +26,12 @@ export async function POST(req: NextRequest) {
         const newUser = new User({userName, email, password: hashPassword});
         // 3) save the user
         const savedUser = await newUser.save();
-        console.log(savedUser);
         return NextResponse.json({
             msg: "User Created Successfully",
             success: true,
             savedUser,
         }, {status: 201});
     } catch (e: any) {
-        console.log("location: Signup route 1: ", e);
         return NextResponse.json({
                 error: e.message
             },

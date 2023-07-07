@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    firstName: {
+        type: String,
+        default: "",
+    },
+    lastName: {
+        type: String,
+        default: "",
+    },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,

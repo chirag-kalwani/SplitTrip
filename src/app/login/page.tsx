@@ -1,20 +1,20 @@
 'use client'
 import {useState} from 'react';
 import Link from "next/link";
-import Input from "@/components/Input";
+import Input from "@/components/Inputs/Input";
 import {useRouter} from 'next/navigation'
 import axios from 'axios'
 import PasswordV from 'password-validator'
 import EmailV from 'email-validator';
-import Spinner from "@/components/Spinner";
-import CloseButton from "@/components/CloseButton";
+import Spinner from "@/components/Spinners/Spinner";
+import CloseButton from "@/components/Buttons/CloseButton";
 
 function LoginPage() {
     const [err, setErr] = useState({is: false, type: ""});
     const [loading, setLoading] = useState(false);
     let schema = new PasswordV();
     schema.is().min(5).is().max(50);
-
+    const router = useRouter();
     function showError(type: string) {
         setErr({is: true, type});
     }
@@ -39,7 +39,7 @@ function LoginPage() {
                 const res = await axios.post('/api/users/login', data);
                 if (res.status === 200) {
                     setErr({is: false, type: ""});
-                    console.log(res.data)
+                    router.push('/');
                 }
             } catch (e) {
                 showError(`Either Credentials are not valid OR You missed some fields OR Internal Server Error`);
@@ -47,7 +47,6 @@ function LoginPage() {
             } finally {
                 setLoading(false);
             }
-            console.log(data)
         }
     }
 

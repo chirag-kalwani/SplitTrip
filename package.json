@@ -18,6 +18,7 @@
     "email-validator": "^2.0.4",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.8",
+    "image-to-base64": "^2.2.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.1",
     "next": "13.4.8",
@@ -25,7 +26,6 @@
     "password-validator": "^5.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hot-toast": "^2.4.1",
     "typescript": "5.1.6"
   },
   "devDependencies": {

@@ -1,13 +1,13 @@
 'use client'
 import {useState} from "react";
-import Input from "@/components/Input";
+import Input from "@/components/Inputs/Input";
 import Link from "next/link";
 import {useRouter} from 'next/navigation'
 import axios from "axios";
 import PasswordV from 'password-validator'
 import EmailV from 'email-validator';
-import Spinner from "@/components/Spinner";
-import CloseButton from "@/components/CloseButton";
+import Spinner from "@/components/Spinners/Spinner";
+import CloseButton from "@/components/Buttons/CloseButton";
 
 function SignUp() {
     const router = useRouter();

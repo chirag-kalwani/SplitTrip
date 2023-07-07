@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         const tokenData = {
             id: user._id,
             email: user.email,
-            name: user.name,
+            name: user.userName,
         }
         // create token
         const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: '1d'});
@@ -40,9 +40,7 @@ export async function POST(req: NextRequest) {
             msg: "Login Success",
             success: true,
         }, {status: 200,});
-        console.log("token: ", token)
         response.cookies.set('token', token, {httpOnly: true});
-
         return response;
     } catch (e: any) {
         console.log("location: Login route 1: ", e);
