@@ -1,7 +1,7 @@
 import {connect} from '@/dbConfig/db'
-import User from "@/models/userModel";
+import User from "@/models/UserModel";
 import {NextRequest, NextResponse} from "next/server";
-import getDataFromToken from '@/helpers/getDataFromToekn/route';
+import getDataFromToken from '@/helpers/getDataFromToken/route';
 
 export async function GET(req: NextRequest) {
     await connect();

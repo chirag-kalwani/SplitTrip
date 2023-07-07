@@ -1,13 +1,13 @@
 // loqin route
 import {connect} from '@/dbConfig/db'
-import User from "@/models/userModel";
+import User from "@/models/UserModel";
 import {NextRequest, NextResponse} from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
-    await connect();
     try {
+        await connect();
         const reqBody = await req.json();
         const {email, password} = reqBody;
 
@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
     } catch (e: any) {
         console.log("location: Login route 1: ", e);
         return NextResponse.json({
+                msg: "Error While login",
                 error: e.message
             },
             {status: 500,}

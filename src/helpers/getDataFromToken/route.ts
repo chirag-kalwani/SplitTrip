@@ -1,5 +1,5 @@
 // Get Data From Token Helper Function
-import {NextRequest, NextResponse} from "next/server";
+import {NextRequest} from "next/server";
 import jwt from "jsonwebtoken";
 
 export default async function GET(req: NextRequest) {

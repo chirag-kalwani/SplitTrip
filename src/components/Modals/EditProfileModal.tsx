@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import Input from "@/components/Inputs/Input";
 
 function EditProfileModal({show, setShow, loadUpperPage}: any) {
     if (!show) return null;
@@ -23,8 +24,7 @@ function EditProfileModal({show, setShow, loadUpperPage}: any) {
     }
 
     return (
-        <div
-            className="fixed inset-0 bg-black bg-opacity-0 backdrop-blur-sm flex justify-center items-center">
+        <div className="fixed inset-5 bg-black bg-opacity-0 backdrop-blur-sm flex justify-center items-center">
             <div className='w-[1000px]'>
 
                 <div className='bg-gray-900 p-2'>

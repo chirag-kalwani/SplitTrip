@@ -20,6 +20,7 @@ function Home() {
             return null;
         }
     }
+
     useEffect(() => {
         setLoading(true);
         getMyData().then((res) => {
@@ -37,7 +38,7 @@ function Home() {
             {/*If Data ferched Successfully we show the MainPage Component*/}
             {/*loadingUpperPage prop use to load this page*/}
             <MainPage loadUpperPage={setLoadThisPage} email={myData.email} userName={myData.userName}
-                      name={myData.firstName + " " + myData.lastName}/>
+                      name={myData.firstName + " " + myData.lastName} isEmailVerified={myData.isVerified}/>
         </>
     )
 }

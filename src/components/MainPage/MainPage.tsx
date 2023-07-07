@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
+'use client';
+import {useEffect, useState} from 'react';
 import EditProfileModal from "@/components/Modals/EditProfileModal";
 import axios from "axios";
 import LogoutButton from "@/components/Buttons/LogoutButton";
 import {useRouter} from "next/navigation";
+import JoinTripModal from "@/components/Modals/JoinTripModal";
+import {Tooltip} from 'react-tooltip';
+import Link from "next/link";
 
-function MainPage({email, userName, name, loadUpperPage}: any) {
-    const [show, setShow] = React.useState(false);
+function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) {
+    let color = isEmailVerified ? "greeen" : "red";
+    let text = isEmailVerified ? "Verified" : "Not Verified";
+    const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+    const [showJoinTripModal, setShowJoinTripModal] = useState(false);
     const [showLoader, setShowLoader] = useState(false);
+    const [myTrips, setMyTrips] = useState([]);
     const router = useRouter();
 
     // The function to handle logout and after logout redirect to login page
@@ -23,6 +31,22 @@ function MainPage({email, userName, name, loadUpperPage}: any) {
             setShowLoader(false);
         }
     }
+
+    // the funtion fetch my trips from backend
+    useEffect(() => {
+        async function getMyTrips() {
+            try {
+                const res = await axios.get('/api/trip/getMyTrips');
+                if (res.status === 200) {
+                    setMyTrips(res.data.data);
+                }
+            } catch (e: any) {
+                console.log("Error While Getting My Trips: ", e);
+            }
+        }
+
+        getMyTrips().then();
+    }, []);
 
     return (
         <div className="flex flex-wrap justify-evenly">
@@ -63,21 +87,27 @@ function MainPage({email, userName, name, loadUpperPage}: any) {
                         </div>
                         <div className="flex items-center mt-2">
                             <span className="mx-2 w-24 ">Email: </span>
-                            <div
-                                className="px-2 py-1 cursor-pointer bg-green-900 max-w-min rounded-lg text-gray-300 hover:bg-green-800 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-200">
+                            <div data-tooltip-id="emailVerificationToolTip" data-tooltip-content={text}
+                                 data-tooltip-variant="error"
+                                 className={`px-2 py-1 cursor-pointer bg-green-900 max-w-min rounded-lg text-gray-300 hover:bg-green-800 hover:text-${color}-100 dark:bg-gray-700 dark:text-${color}-300 dark:hover:bg-gray-600 dark:hover:text-${color}-400`}>
                                 {email}
                             </div>
+                            <Tooltip clickable place={"right"} style={{cursor: "pointer"}}
+                                     id="emailVerificationToolTip"/>
                         </div>
+
                         <div className="flex items-center mt-2">
                             <span className="mx-2 w-24">Edit Profile: </span>
 
-                            <button type="button" onClick={() => setShow(true)}
+                            <button type="button" onClick={() => setShowEditProfileModal(true)}
                                     className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
                                 Edit_Profile
                             </button>
 
+                            <EditProfileModal loadUpperPage={loadUpperPage} show={showEditProfileModal}
+                                              setShow={setShowEditProfileModal}/>
                         </div>
-                        <EditProfileModal loadUpperPage={loadUpperPage} show={show} setShow={setShow}/>
+
                         <div className="flex items-center mt-2">
                             <span className="mx-2 w-24 ">Logout: </span>
                             <LogoutButton show={showLoader} handleLogout={handleLogout}/>
@@ -87,14 +117,13 @@ function MainPage({email, userName, name, loadUpperPage}: any) {
                 </div>
             </div>
 
-
             {/* Second part: Trip Related */}
 
             <div
                 className="container bg-gray-800 max-w-lg rounded dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out m-12">
                 <div className="flex justify-center">
-                    <button type="button"
-                            className="text-white bg-blue-700 hover:bg-blue-800 m-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <Link type="button" href="/create_trip"
+                          className="text-white bg-blue-700 hover:bg-blue-800 m-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Create New Trip
                         <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                              fill="none"
@@ -102,19 +131,32 @@ function MainPage({email, userName, name, loadUpperPage}: any) {
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                   d="M1 5h12m0 0L9 1m4 4L9 9"/>
                         </svg>
+                    </Link>
+                    <button type="button" onClick={() => setShowJoinTripModal(true)}
+                            className="text-white bg-blue-700 hover:bg-blue-800 m-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Join Trip
+                        <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 10">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                        </svg>
                     </button>
+                    <JoinTripModal loadUpperPage={loadUpperPage} show={showJoinTripModal} setShow={setShowJoinTripModal}/>
                 </div>
                 <div className="flex justify-center">
                     <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
-                        <li className="pb-5 pt-5 cursor-pointer">
-                            <div className="flex items-center space-x-4">
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-3xl text-center font-semibold text-blue-600/100 dark:text-blue-500/100 select-none hover:!text-blue-700">
-                                        Trip To Manali
-                                    </p>
+                        {myTrips.map((trip: any) => (
+                            <li className="pb-5 pt-5 cursor-pointer" key={trip.key}>
+                                <div className="flex items-center space-x-4">
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-3xl text-center font-semibold text-blue-600/100 dark:text-blue-500/100 select-none hover:!text-blue-700">
+                                            {trip._doc.tripName}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>))
+                        }
                     </ul>
                 </div>
 
