@@ -6,10 +6,15 @@ import axios from "axios";
 import Alert from "@/components/Alert/Alert";
 
 function CreateTrip() {
+    // tripId is the id of the trip which user have Created and he is owner of this trip
     const [tripId, setTripId] = useState<string>("");
+    // loading is the state which is used to show the loading spinner
     const [loading, setLoading] = useState<boolean>(false);
+    // err is the state which is used to show the error alert
     const [err, setErr] = useState<any>({is: false, msg: ""});
 
+    // handleSubmit is the function which is used to create the trip
+    // It also set the tripId state, User use this tripId to add other freinds.
     async function handleSubmit(e: any) {
         try {
             setLoading(true);

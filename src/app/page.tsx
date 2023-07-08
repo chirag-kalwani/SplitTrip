@@ -35,7 +35,7 @@ function Home() {
     if (loading) return <Spinner/>
     return (
         <>
-            {/*If Data ferched Successfully we show the MainPage Component*/}
+            {/*If Data fetched Successfully we show the MainPage Component*/}
             {/*loadingUpperPage prop use to load this page*/}
             <MainPage loadUpperPage={setLoadThisPage} email={myData.email} userName={myData.userName}
                       name={myData.firstName + " " + myData.lastName} isEmailVerified={myData.isVerified}/>

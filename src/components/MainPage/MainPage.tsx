@@ -9,12 +9,21 @@ import {Tooltip} from 'react-tooltip';
 import Link from "next/link";
 
 function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) {
+    // color and text for email verification status
     let color = isEmailVerified ? "greeen" : "red";
     let text = isEmailVerified ? "Verified" : "Not Verified";
+
+    // States for modals to show and hide them
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showJoinTripModal, setShowJoinTripModal] = useState(false);
+
+    // State to show and hide loader
     const [showLoader, setShowLoader] = useState(false);
+
+    // state to store my trips
     const [myTrips, setMyTrips] = useState([]);
+
+    // router to redirect to login page after logout
     const router = useRouter();
 
     // The function to handle logout and after logout redirect to login page
@@ -32,8 +41,8 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
         }
     }
 
-    // the funtion fetch my trips from backend
     useEffect(() => {
+        // The funtion fetch my trips(trips in which current user is member) from backend
         async function getMyTrips() {
             try {
                 const res = await axios.get('/api/trip/getMyTrips');
@@ -49,6 +58,7 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
         getMyTrips().then();
     }, []);
 
+    // The function to handle click on trip name redirect to trip page with trip id
     function handleLiClick(id: any) {
         router.push(`/my_trip/${id}`);
     }
