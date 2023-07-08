@@ -18,7 +18,7 @@ function FreindsList({members}: any) {
                     <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={i}>
                         <th scope="row"
                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {member.firstName ? member.firstName + " " + member.lastName : member.username}
+                            {member.userName}
                         </th>
                     </tr>
                 ))}

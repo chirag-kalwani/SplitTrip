@@ -1,6 +1,6 @@
 // Create Trip Route
 import {connect} from '@/dbConfig/db';
-import Trip from "@/models/TripModal";
+import Trip from "@/models/TripModel";
 import {NextRequest, NextResponse} from "next/server";
 
 export async function POST(req: NextRequest) {

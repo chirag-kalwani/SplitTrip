@@ -8,20 +8,17 @@ import PasswordV from 'password-validator'
 import EmailV from 'email-validator';
 import Spinner from "@/components/Spinners/Spinner";
 import CloseButton from "@/components/Buttons/CloseButton";
+import Alert from "@/components/Alert/Alert";
 
 function LoginPage() {
-    const [err, setErr] = useState({is: false, type: ""});
+    const [err, setErr] = useState({is: false, msg: ""});
     const [loading, setLoading] = useState(false);
     let schema = new PasswordV();
     schema.is().min(5).is().max(50);
     const router = useRouter();
-    function showError(type: string) {
-        setErr({is: true, type});
-    }
 
-    function handleRemoveError(e: any) {
-        e.preventDefault();
-        setErr({is: false, type: ""});
+    function showError(type: string) {
+        setErr({is: true, msg: type});
     }
 
     async function handleSubmit(e: any) {
@@ -38,7 +35,6 @@ function LoginPage() {
                 setLoading(true);
                 const res = await axios.post('/api/users/login', data);
                 if (res.status === 200) {
-                    setErr({is: false, type: ""});
                     router.push('/');
                 }
             } catch (e) {
@@ -68,13 +64,8 @@ function LoginPage() {
                                    className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
                                     password?</a>
                             </div>
-                            {err.is &&
-                                <div className="flex justify-evenly items-center">
-                                    <p className="text-red-500">{err.type} </p>
-                                    <div onClick={handleRemoveError}>
-                                        <CloseButton/>
-                                    </div>
-                                </div>
+                            {
+                                err.is && <Alert err={err} closeFunction={setErr}/>
                             }
                             {loading && <Spinner/>}
                             <button type="submit" onClick={handleSubmit}

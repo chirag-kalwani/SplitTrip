@@ -4,6 +4,7 @@ const tripSchema = new mongoose.Schema({
     tripName: {
         type: String,
         required: [true, "Please Provide Trip Name"],
+        unique: true,
     },
     tripDescription: {
         type: String,

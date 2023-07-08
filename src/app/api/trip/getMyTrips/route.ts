@@ -2,7 +2,7 @@
 
 import {connect} from '@/dbConfig/db';
 import {NextRequest, NextResponse} from "next/server";
-import Trip from "@/models/TripModal";
+import Trip from "@/models/TripModel";
 import LinkTrips from "@/models/LinkTrips";
 import getDataFromToken from "@/helpers/getDataFromToken/route";
 

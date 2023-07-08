@@ -37,9 +37,10 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
         async function getMyTrips() {
             try {
                 const res = await axios.get('/api/trip/getMyTrips');
-                if (res.status === 200) {
-                    setMyTrips(res.data.data);
-                }
+                const filtered = res.data.data.filter((trip: any) => trip._doc !== undefined);
+                const myTrips = filtered.map((trip: any) => trip._doc);
+                console.log(myTrips)
+                setMyTrips(myTrips);
             } catch (e: any) {
                 console.log("Error While Getting My Trips: ", e);
             }
@@ -151,13 +152,13 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
                 </div>
                 <div className="flex justify-center">
                     <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
-                        {myTrips.map((trip: any) => (
-                            <li className="pb-5 pt-5 cursor-pointer" onClick={() => handleLiClick(trip._doc._id)}
-                                key={trip.key}>
+                        {myTrips.map((trip: any, i: number) => (
+                            <li className="pb-5 pt-5 cursor-pointer" onClick={() => handleLiClick(trip._id)}
+                                key={i}>
                                 <div className="flex items-center space-x-4">
                                     <div className="flex-1 min-w-0">
                                         <p className="text-3xl text-center font-semibold text-blue-600/100 dark:text-blue-500/100 select-none hover:!text-blue-700">
-                                            {trip._doc.tripName}
+                                            {trip.tripName}
                                         </p>
                                     </div>
                                 </div>

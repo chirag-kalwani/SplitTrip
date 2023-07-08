@@ -2,13 +2,13 @@
 import {useState} from 'react';
 import Input from "@/components/Inputs/Input";
 import Spinner from "@/components/Spinners/Spinner";
-import Alert from "@/components/Alert/Alert";
 import axios from "axios";
+import Alert from "@/components/Alert/Alert";
 
 function CreateTrip() {
     const [tripId, setTripId] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<any>({is: false, err: ""});
+    const [err, setErr] = useState<any>({is: false, msg: ""});
 
     async function handleSubmit(e: any) {
         try {
@@ -19,30 +19,21 @@ function CreateTrip() {
                 tripLocation: e.target.form[2].value
             }
             if (data.tripName === "" || data.tripDescription === "" || data.tripLocation === "") {
-                setError({is: true, err: "All fields are required"});
-                setTimeout(() => {
-                    setError({is: false, err: ""});
-                }, 2000);
-                return;
+                setErr({is: true, msg: "All fields are required"});
             }
             const res = await axios.post("/api/trip/createTrip", data);
             // Now he is owner of this trip so we will also add this trip and userId inro Linking table: LinkTrip
             await axios.post("/api/trip/joinTrip", {tripId: res.data.savedTrip._id, isOwner: true});
             setTripId(res.data.savedTrip._id);
         } catch (e: any) {
-            setError({is: true, err: "Request Failed, Either Server is Down Or Choose unique Trip Name"});
-            setTimeout(() => {
-                setError({is: false, err: ""});
-            }, 5000);
+            setErr({is: true, msg: "Request Failed, Either Server is Down Or Choose unique Trip Name"});
         } finally {
             setLoading(false);
-            e.target.form.reset();
         }
     }
 
     return (
         <div>
-            {error.is && <Alert msg={error.err}/>}
             <div className="mt-28 w-full flex flex-wrap justify-center items-center">
                 <form className="w-96 p-5">
                     <div className="mt-4">
@@ -56,6 +47,7 @@ function CreateTrip() {
                         <Input label={"Trip Location"} type={"text"} id={"tripLocation"}
                                placeholder={"Enter Location of Trip"}/>
                     </div>
+                    {err.is && <Alert err={err} closeFunction={setErr}/>}
                     <div className="mt-8">
                         <button type="button" onClick={handleSubmit}
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create
