@@ -48,6 +48,10 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
         getMyTrips().then();
     }, []);
 
+    function handleLiClick(id: any) {
+        router.push(`/my_trip/${id}`);
+    }
+
     return (
         <div className="flex flex-wrap justify-evenly">
 
@@ -142,12 +146,14 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
                                   d="M1 5h12m0 0L9 1m4 4L9 9"/>
                         </svg>
                     </button>
-                    <JoinTripModal loadUpperPage={loadUpperPage} show={showJoinTripModal} setShow={setShowJoinTripModal}/>
+                    <JoinTripModal loadUpperPage={loadUpperPage} show={showJoinTripModal}
+                                   setShow={setShowJoinTripModal}/>
                 </div>
                 <div className="flex justify-center">
                     <ul className="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
                         {myTrips.map((trip: any) => (
-                            <li className="pb-5 pt-5 cursor-pointer" key={trip.key}>
+                            <li className="pb-5 pt-5 cursor-pointer" onClick={() => handleLiClick(trip._doc._id)}
+                                key={trip.key}>
                                 <div className="flex items-center space-x-4">
                                     <div className="flex-1 min-w-0">
                                         <p className="text-3xl text-center font-semibold text-blue-600/100 dark:text-blue-500/100 select-none hover:!text-blue-700">

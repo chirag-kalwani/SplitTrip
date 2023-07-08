@@ -1,3 +1,4 @@
+// Create Trip Route
 import {connect} from '@/dbConfig/db';
 import Trip from "@/models/TripModal";
 import {NextRequest, NextResponse} from "next/server";

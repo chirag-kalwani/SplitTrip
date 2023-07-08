@@ -1,3 +1,5 @@
+// Get all trips of current user: getMyTrips route
+
 import {connect} from '@/dbConfig/db';
 import {NextRequest, NextResponse} from "next/server";
 import Trip from "@/models/TripModal";

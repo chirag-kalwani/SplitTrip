@@ -1,3 +1,4 @@
+// Join trip route by tripId
 import {connect} from "@/dbConfig/db";
 import {NextRequest, NextResponse} from "next/server";
 import LinkTrip from "@/models/LinkTrips";

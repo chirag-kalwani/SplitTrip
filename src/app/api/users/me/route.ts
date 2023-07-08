@@ -1,3 +1,4 @@
+// Fetches the user data from the token: token is fetch by getDataFromToken function from helper folder
 import {connect} from '@/dbConfig/db'
 import User from "@/models/UserModel";
 import {NextRequest, NextResponse} from "next/server";
