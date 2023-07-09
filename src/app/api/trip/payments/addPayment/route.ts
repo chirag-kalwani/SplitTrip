@@ -9,21 +9,12 @@ export async function POST(req: NextRequest) {
         const {data, tripId} = await req.json();
         const userId = await getDataFromToken(req);
         for (const d of data) {
-            const findOld = await TripPayment.findOne({payerId: d.userId, receiverId: userId, tripId: tripId});
-            const revertOld = await TripPayment.findOne({payerId: userId, receiverId: d.userId, tripId: tripId});
-            if (findOld) {
-                await TripPayment.updateOne({payerId: d.userId, receiverId: userId, tripId: tripId}, {
-                    $set: {
-                        amount: d.share * 1 + findOld.amount * 1,
-                    }
-                });
-            } else {
-                await TripPayment.updateOne({payerId: userId, receiverId: d.userId, tripId: tripId}, {
-                    $set: {
-                        amount: revertOld.amount * 1 - d.share * 1,
-                    }
-                });
-            }
+            await new TripPayment({
+                tripId,
+                payerId: d.userId,
+                receiverId: userId,
+                amount: d.share,
+            }).save();
         }
         return NextResponse.json({
             msg: "Payment added successfully",

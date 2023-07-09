@@ -1,12 +1,16 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import Spinner from "@/components/Spinners/Spinner";
 
-function PayTo({payTo}: any) {
+function PayTo({payTo, loading}: any) {
 
     return (
         <div className="m-20">
-            <h1>Pay to: </h1>
+            <h1> Pay to: </h1>
+            {loading && <div className="my-3">
+                <Spinner/>
+            </div>}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead

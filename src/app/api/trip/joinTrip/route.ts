@@ -3,7 +3,6 @@ import {connect} from "@/dbConfig/db";
 import {NextRequest, NextResponse} from "next/server";
 import LinkTrip from "@/models/LinkTrips";
 import getDataFromToken from "@/helpers/getDataFromToken/route";
-import TripPayment from "@/models/TripPayment";
 
 export async function POST(req: NextRequest) {
     try {
@@ -16,21 +15,6 @@ export async function POST(req: NextRequest) {
                 msg: "You have already joined this trip."
             }, {status: 400});
         }
-        const allUsers = await LinkTrip.find({tripId});
-        for (let user of allUsers) {
-            await new TripPayment({
-                payerId: userId,
-                receiverId: user.userId,
-                amount: 0,
-                tripId: tripId,
-            }).save();
-        }
-        await new TripPayment({
-            payerId: userId,
-            receiverId: userId,
-            amount: 0,
-            tripId: tripId,
-        }).save();
         const newLinkTrip = new LinkTrip({
             tripId,
             userId,

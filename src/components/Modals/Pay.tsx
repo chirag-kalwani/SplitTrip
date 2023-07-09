@@ -3,12 +3,15 @@ import React, {useState} from 'react';
 import Input from "@/components/Inputs/Input";
 import Alert from "@/components/Alert/Alert";
 import axios from "axios";
+import Spinner from "@/components/Spinners/Spinner";
 
-function Pay({members, handleClose, tripId}: any) {
+function Pay({members, handleClose, tripId, loadUpperPage}: any) {
     // state: equalShare keep track of checkbox
     const [equalShare, setEqualShare] = useState(true);
     // state: err keep track of error
     const [err, setErr] = useState({is: false, msg: ""});
+    // loader
+    const [isLoading, setIsLoading] = useState(false);
 
     // function update placeholder of share input
     function func() {
@@ -69,11 +72,15 @@ function Pay({members, handleClose, tripId}: any) {
         const data: any = getDetails(e);
         if (data === false) return;
         try {
+            setIsLoading(true);
             await axios.post('/api/trip/payments/addPayment', {data: data, tripId: tripId});
+            loadUpperPage((prev: any) => !prev);
             handleClose(false);
         } catch (err: any) {
             console.log(err.message);
             setErr({is: true, msg: err.message});
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -103,11 +110,12 @@ function Pay({members, handleClose, tripId}: any) {
                         ))}
                         {err.is && <Alert err={err} closeFunction={setErr}/>}
                         <div className="flex justify-around">
-                            <button onClick={handleChange}
+                            <button onClick={handleChange} disabled={isLoading}
                                     className="relative inline-flex items-center justify-center mt-10  px-5 py-2.5  p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
                                 Pay
                             </button>
-                            <button onClick={() => handleClose(false)}
+                            {isLoading && (<div className="mt-10"><Spinner/></div>)}
+                            <button onClick={() => handleClose(false)} disabled={isLoading}
                                     className="relative inline-flex items-center justify-center mt-10 p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                                   <span
                                       className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -116,7 +124,6 @@ function Pay({members, handleClose, tripId}: any) {
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

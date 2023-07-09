@@ -1,9 +1,13 @@
 import React from 'react';
+import Spinner from "@/components/Spinners/Spinner";
 
-function TakeFrom({takeFrom}: any) {
+function TakeFrom({takeFrom, loading}: any) {
     return (
         <div className="m-20">
             <h1>Take from: </h1>
+            {loading && <div className="my-3">
+                <Spinner/>
+            </div>}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead

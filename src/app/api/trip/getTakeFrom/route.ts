@@ -9,11 +9,11 @@ export async function POST(req: NextRequest) {
         await connect();
         const {tripId} = await req.json();
         const userId = await getDataFromToken(req);
-        let tripPayment = await TripPayment.find({tripId, payerId: userId});
+        let tripPayment = await TripPayment.find({tripId, receiverId: userId});
         const data = [];
         for (let i = 0; i < tripPayment.length; i++) {
-            const receiver = await User.findById(tripPayment[i].receiverId).select("-password");
-            data.push({trip: tripPayment[i], receiver});
+            const payer = await User.findById(tripPayment[i].payerId).select("-password");
+            data.push({trip: tripPayment[i], payer});
         }
         return NextResponse.json({
             msg: "Trip payment fetched successfully.",
