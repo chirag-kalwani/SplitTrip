@@ -9,10 +9,6 @@ import {Tooltip} from 'react-tooltip';
 import Link from "next/link";
 
 function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) {
-    // color and text for email verification status
-    let color = isEmailVerified ? "greeen" : "red";
-    let text = isEmailVerified ? "Verified" : "Not Verified";
-
     // States for modals to show and hide them
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showJoinTripModal, setShowJoinTripModal] = useState(false);
@@ -25,6 +21,10 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
 
     // router to redirect to login page after logout
     const router = useRouter();
+
+    // color and text for email verification status
+    let color = isEmailVerified ? "greeen" : "red";
+    let text = isEmailVerified ? "Verified" : "Not Verified";
 
     // The function to handle logout and after logout redirect to login page
     async function handleLogout() {

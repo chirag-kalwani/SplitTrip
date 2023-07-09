@@ -4,8 +4,9 @@ import axios from "axios";
 import Alert from "@/components/Alert/Alert";
 
 function JoinTripModal({show, setShow, loadUpperPage}: any) {
-    if (!show) return null;
     const [err, setErr] = useState({is: false, msg: ""});
+
+    if (!show) return null;
 
     async function handleSubmit(e: any) {
         // Implement Join Trip Backend
