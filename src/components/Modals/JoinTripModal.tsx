@@ -11,7 +11,7 @@ function JoinTripModal({show, setShow, loadUpperPage}: any) {
         // Implement Join Trip Backend
         const tripId = e.target.form[0].value;
         try {
-            const res = await axios.post('/api/trip/joinTrip', {tripId});
+            const res = await axios.post('/api/trip/joinTrip', {tripId, isOwner: false});
             setShow(false);
             loadUpperPage((prev: any) => !prev);
         } catch (e: any) {

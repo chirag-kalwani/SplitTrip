@@ -27,7 +27,7 @@ function CreateTrip() {
                 setErr({is: true, msg: "All fields are required"});
             }
             const res = await axios.post("/api/trip/createTrip", data);
-            // Now he is owner of this trip so we will also add this trip and userId inro Linking table: LinkTrip
+            // Now he is owner of this trip so we will also add this trip and userId into Linking table: LinkTrip
             await axios.post("/api/trip/joinTrip", {tripId: res.data.savedTrip._id, isOwner: true});
             setTripId(res.data.savedTrip._id);
         } catch (e: any) {

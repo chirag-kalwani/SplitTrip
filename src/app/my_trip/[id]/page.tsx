@@ -5,6 +5,7 @@ import PayTo from "@/components/Trip/PayTo";
 import TakeFrom from "@/components/Trip/TakeFrom";
 import axios from "axios";
 import Pay from "@/components/Modals/Pay";
+import {id} from "postcss-selector-parser";
 
 function MyTrip({params}: any) {
 
@@ -17,6 +18,37 @@ function MyTrip({params}: any) {
     // pay is the state which is used to show the pay modal where user do entry of the payment done by him
     const [pay, setPay] = useState<boolean>(false);
 
+    const [payTo, setPayTo] = useState<any[]>([]);
+    const [takeFrom, setTakeFrom] = useState<any[]>([]);
+
+    async function getPayTo() {
+        try {
+            const res = await axios.post('/api/trip/getPayTo', {tripId});
+            const to = [], from = [];
+            for (let d of res.data.data) {
+                if (d.receiver._id === d.trip.payerId && d.trip.payerId === d.trip.receiverId) continue;
+                if (d.trip.amount > 0) {
+                    to.push({
+                        userName: d.receiver.userName,
+                        amount: d.trip.amount,
+                        fullName: d.receiver.firstName + " " + d.receiver.lastName,
+                        email: d.receiver.email,
+                    })
+                } else if (d.trip.amount < 0) {
+                    from.push({
+                        userName: d.receiver.userName,
+                        amount: -d.trip.amount,
+                        fullName: d.receiver.firstName + " " + d.receiver.lastName,
+                        email: d.receiver.email,
+                    })
+                }
+            }
+            setPayTo(to);
+            setTakeFrom(from);
+        } catch (e: any) {
+            console.log("Error in getPayTo: ", e.message);
+        }
+    }
 
     useEffect(() => {
         // getUsers is the function which is used to get all the users from the tripId
@@ -33,7 +65,7 @@ function MyTrip({params}: any) {
             }
         }
 
-        getUsers().then();
+        getUsers().then(() => getPayTo());
     }, []);
 
     return (
@@ -51,13 +83,13 @@ function MyTrip({params}: any) {
 
             {/*Either pay modal remains open or dahboard */}
             {pay ?
-                <Pay members={members} handleClose={setPay}/> :
+                <Pay tripId={tripId} members={members} handleClose={setPay}/> :
                 <div className="flex flex-row flex-wrap">
                     {/*Members in The trip shown in by the following component*/}
                     <FreindsList members={members}/>
                     {/* Current user pending payments */}
-                    <PayTo/>
-                    <TakeFrom/>
+                    <PayTo payTo={payTo}/>
+                    <TakeFrom takeFrom={takeFrom}/>
                 </div>
             }
         </div>

@@ -2,8 +2,9 @@
 import React, {useState} from 'react';
 import Input from "@/components/Inputs/Input";
 import Alert from "@/components/Alert/Alert";
+import axios from "axios";
 
-function Pay({members, handleClose}: any) {
+function Pay({members, handleClose, tripId}: any) {
     // state: equalShare keep track of checkbox
     const [equalShare, setEqualShare] = useState(true);
     // state: err keep track of error
@@ -21,7 +22,7 @@ function Pay({members, handleClose}: any) {
             setErr({is: true, msg: "Price must be a number: " + num});
             return false;
         }
-        if (num <= 0) {
+        if (num < 0) {
             setErr({is: true, msg: "Price must be a positive number: " + num});
             return false;
         }
@@ -44,9 +45,11 @@ function Pay({members, handleClose}: any) {
         } else {
             let sum = 0;
             for (let i = 0; i < members.length; i++) {
-                let share = e.target.form[i + 2].value;
+                let val = e.target.form[i + 2].value;
+                let share = 0;
+                if (val !== "") share = val * 1;
                 if (!checkNumber(share)) return false;
-                sum += share * 1;
+                sum += share;
                 data[members[i]._id] = share;
             }
             if (sum !== data.price) {
@@ -54,16 +57,22 @@ function Pay({members, handleClose}: any) {
                 return false;
             }
         }
-        return data;
+        const retData = [];
+        for (let i = 0; i < members.length; i++) {
+            retData.push({userId: members[i]._id, share: data[members[i]._id]});
+        }
+        return retData;
     }
 
     // save data to server
     async function handleChange(e: any) {
-        const data = getDetails(e);
+        const data: any = getDetails(e);
         if (data === false) return;
         try {
-            // todo: send data to server
+            await axios.post('/api/trip/payments/addPayment', {data: data, tripId: tripId});
+            handleClose(false);
         } catch (err: any) {
+            console.log(err.message);
             setErr({is: true, msg: err.message});
         }
     }

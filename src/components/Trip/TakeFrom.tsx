@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TakeFrom() {
+function TakeFrom({takeFrom}: any) {
     return (
         <div className="m-20">
             <h1>Take from: </h1>
@@ -21,20 +21,27 @@ function TakeFrom() {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                        <th scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Ramesh
-                        </th>
-                        <td className="px-6 py-4">
-                            Rs. 500
-                        </td>
-                        <td className="px-6 py-4">
-                            <button
-                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Update
-                            </button>
-                        </td>
-                    </tr>
+                    {
+                        takeFrom.map((pay: any, i: number) => {
+                            return (
+                                <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" key={i}>
+                                    <th scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {pay.userName}
+                                    </th>
+                                    <td className="px-6 py-4">
+                                        Rs. {pay.amount}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <button
+                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Update
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+
                     </tbody>
                 </table>
             </div>

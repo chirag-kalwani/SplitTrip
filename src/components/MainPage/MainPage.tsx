@@ -48,7 +48,6 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
                 const res = await axios.get('/api/trip/getMyTrips');
                 const filtered = res.data.data.filter((trip: any) => trip._doc !== undefined);
                 const myTrips = filtered.map((trip: any) => trip._doc);
-                console.log(myTrips)
                 setMyTrips(myTrips);
             } catch (e: any) {
                 console.log("Error While Getting My Trips: ", e);
