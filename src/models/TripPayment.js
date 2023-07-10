@@ -18,6 +18,9 @@ const tripPaymentSchema = new mongoose.Schema({
         ref: 'users',
     },
     receivers: [receiverSchema],
+    amount: {
+        type: Number,
+    },
 }, {timestamps: true});
 
 const TripPayment = mongoose.models.trippayments || mongoose.model('trippayments', tripPaymentSchema);

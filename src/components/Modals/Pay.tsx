@@ -64,7 +64,7 @@ function Pay({members, handleClose, tripId, loadUpperPage}: any) {
         for (let i = 0; i < members.length; i++) {
             retData.push({receiverId: members[i]._id, share: data[members[i]._id]});
         }
-        return retData;
+        return {retData, amount: data["price"]};
     }
 
     // save data to server
@@ -73,7 +73,11 @@ function Pay({members, handleClose, tripId, loadUpperPage}: any) {
         if (data === false) return;
         try {
             setIsLoading(true);
-            let res = await axios.post('/api/trip/payments/addPayment', {data: data, tripId: tripId});
+            let res = await axios.post('/api/trip/payments/addPayment', {
+                data: data.retData,
+                amount: data.amount,
+                tripId: tripId
+            });
             // Todo: Complete Furture
             loadUpperPage((prev: any) => !prev);
             handleClose(false);

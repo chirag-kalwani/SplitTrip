@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
             ret['payer'] = await User.findById(item.payerId).select('userName');
             ret["createdAt"] = item.createdAt;
             ret['receivers'] = [];
+            ret['amount'] = item.amount;
             for (const receiver of item.receivers) {
                 let temp: any = {};
                 temp['receiver'] = await User.findById(receiver.receiverIds).select('userName');

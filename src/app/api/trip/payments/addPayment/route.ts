@@ -6,7 +6,7 @@ import getDataFromToken from "@/helpers/getDataFromToken/route";
 export async function POST(req: NextRequest) {
     try {
         await connect();
-        const {data, tripId} = await req.json();
+        const {data, tripId, amount} = await req.json();
         const payerId = await getDataFromToken(req);
         let insertData: any = {tripId, payerId};
         let receivers = [];
@@ -19,7 +19,8 @@ export async function POST(req: NextRequest) {
         }
         insertData = {
             ...insertData,
-            receivers
+            receivers,
+            amount
         };
         let ret = await new TripPayment(insertData).save();
         return NextResponse.json({
