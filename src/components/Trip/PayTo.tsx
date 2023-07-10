@@ -34,7 +34,7 @@ function PayTo({payTo, loading}: any) {
                                         {pay.userName}
                                     </th>
                                     <td className="px-6 py-4">
-                                        Rs. {pay.amount}
+                                        Rs. {pay.netAmount}
                                     </td>
                                 </tr>
                             )

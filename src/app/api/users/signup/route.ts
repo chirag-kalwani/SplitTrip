@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
         }, {status: 201});
     } catch (e: any) {
         return NextResponse.json({
-                error: e.message
+                location: "Signup: ",
+                error: e.message,
             },
             {status: 500,}
         );

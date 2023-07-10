@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
         const data = await LinkTrips.find({tripId: tripId});
         const userData = [];
         for (let i = 0; i < data.length; i++) {
-            userData.push({...await User.findById(data[i].userId).select('-password'), isOwner: data[i].isOwner});
+            userData.push({...await User.findById(data[i].userId).select('userName _id'), isOwner: data[i].isOwner});
         }
         return NextResponse.json({
             msg: "All users from trip id",

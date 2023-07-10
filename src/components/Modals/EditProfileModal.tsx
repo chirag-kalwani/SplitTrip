@@ -26,7 +26,6 @@ function EditProfileModal({show, setShow, loadUpperPage}: any) {
     return (
         <div className="fixed inset-5 bg-black bg-opacity-0 backdrop-blur-sm flex justify-center items-center">
             <div className='w-[1000px]'>
-
                 <div className='bg-gray-900 p-2'>
                     <form className="h-96">
                         <div className="grid md:grid-cols-2 md:gap-6">

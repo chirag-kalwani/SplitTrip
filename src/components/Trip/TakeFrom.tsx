@@ -19,9 +19,6 @@ function TakeFrom({takeFrom, loading}: any) {
                         <th scope="col" className="px-6 py-3">
                             Amount
                         </th>
-                        <th scope="col" className="px-6 py-3">
-                            Update Amount
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,12 +31,7 @@ function TakeFrom({takeFrom, loading}: any) {
                                         {pay.userName}
                                     </th>
                                     <td className="px-6 py-4">
-                                        Rs. {pay.amount}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <button
-                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Update
-                                        </button>
+                                        Rs. {pay.netAmount}
                                     </td>
                                 </tr>
                             )

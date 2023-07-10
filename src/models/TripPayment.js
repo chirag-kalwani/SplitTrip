@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const receiverSchema = new mongoose.Schema({
+    receiverIds: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+    },
+    amount: Number
+}, {_id: false});
+
 const tripPaymentSchema = new mongoose.Schema({
     tripId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -9,14 +17,7 @@ const tripPaymentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
     },
-    receiverId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
-    },
-    amount: {
-        type: Number,
-        required: true,
-    },
+    receivers: [receiverSchema],
 }, {timestamps: true});
 
 const TripPayment = mongoose.models.trippayments || mongoose.model('trippayments', tripPaymentSchema);

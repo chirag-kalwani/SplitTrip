@@ -7,17 +7,24 @@ export async function POST(req: NextRequest) {
     try {
         await connect();
         const {data, tripId} = await req.json();
-        const userId = await getDataFromToken(req);
+        const payerId = await getDataFromToken(req);
+        let insertData: any = {tripId, payerId};
+        let receivers = [];
         for (const d of data) {
-            await new TripPayment({
-                tripId,
-                payerId: d.userId,
-                receiverId: userId,
-                amount: d.share,
-            }).save();
+            const {share, receiverId} = d;
+            receivers.push({
+                receiverIds: receiverId,
+                amount: share
+            })
         }
+        insertData = {
+            ...insertData,
+            receivers
+        };
+        let ret = await new TripPayment(insertData).save();
         return NextResponse.json({
             msg: "Payment added successfully",
+            data: ret,
         }, {status: 200});
     } catch (e: any) {
         console.log("Error In addPayment:", e);

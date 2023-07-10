@@ -39,7 +39,6 @@ function LoginPage() {
                 }
             } catch (e) {
                 showError(`Either Credentials are not valid OR You missed some fields OR Internal Server Error`);
-                console.error("In Login Page: ", e);
             } finally {
                 setLoading(false);
             }

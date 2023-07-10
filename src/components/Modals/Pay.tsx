@@ -62,7 +62,7 @@ function Pay({members, handleClose, tripId, loadUpperPage}: any) {
         }
         const retData = [];
         for (let i = 0; i < members.length; i++) {
-            retData.push({userId: members[i]._id, share: data[members[i]._id]});
+            retData.push({receiverId: members[i]._id, share: data[members[i]._id]});
         }
         return retData;
     }
@@ -73,7 +73,8 @@ function Pay({members, handleClose, tripId, loadUpperPage}: any) {
         if (data === false) return;
         try {
             setIsLoading(true);
-            await axios.post('/api/trip/payments/addPayment', {data: data, tripId: tripId});
+            let res = await axios.post('/api/trip/payments/addPayment', {data: data, tripId: tripId});
+            // Todo: Complete Furture
             loadUpperPage((prev: any) => !prev);
             handleClose(false);
         } catch (err: any) {

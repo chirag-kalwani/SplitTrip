@@ -43,7 +43,6 @@ export async function POST(req: NextRequest) {
         response.cookies.set('token', token, {httpOnly: true});
         return response;
     } catch (e: any) {
-        console.log("location: Login route 1: ", e);
         return NextResponse.json({
                 msg: "Error While login",
                 error: e.message
