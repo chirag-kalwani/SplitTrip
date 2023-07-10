@@ -136,7 +136,7 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
             <div
                 className="container bg-gray-800 max-w-lg rounded dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out m-12">
                 <div className="flex justify-center">
-                    <Link type="button" href="/create_trip"
+                    <Link type="button" href="/create_trip" target="_blank"
                           className="text-white bg-blue-700 hover:bg-blue-800 m-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Create New Trip
                         <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"

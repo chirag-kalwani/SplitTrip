@@ -37,6 +37,10 @@ function Pay({members, handleClose, tripId, loadUpperPage}: any) {
         e.preventDefault();
         let price = e.target.form[0].value;
         if (!checkNumber(price)) return false;
+        if (price === "") {
+            setErr({is: true, msg: "Price is required"});
+            return false;
+        }
         let data: any = {
             price: e.target.form[0].value * 1,
         }

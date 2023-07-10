@@ -60,7 +60,7 @@ function CreateTrip() {
                         </button>
                     </div>
                 </form>
-                <p className="mt-10">
+                <div className="mt-10">
                     <span className="ml-5">Your Trip ID is: </span>
                     {tripId ?
                         <span className="text-blue-700 ml-5 mt-2">{tripId}</span> :
@@ -78,7 +78,7 @@ function CreateTrip() {
                                 </li>
                             </ul>}
                     </div>
-                </p>
+                </div>
             </div>
         </div>
     );
