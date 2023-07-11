@@ -22,5 +22,7 @@ export const config = {
         '/',
         '/signup',
         '/login',
+        '/create_trip/:path*',
+        '/my_trip/:path*'
     ],
 }

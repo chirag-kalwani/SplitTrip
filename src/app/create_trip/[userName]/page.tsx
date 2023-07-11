@@ -1,11 +1,12 @@
 "use client"
-import {useState} from 'react';
+import React, {useState} from 'react';
 import Input from "@/components/Inputs/Input";
 import Spinner from "@/components/Spinners/Spinner";
 import axios from "axios";
 import Alert from "@/components/Alert/Alert";
+import Link from "next/link";
 
-function CreateTrip() {
+function CreateTrip({params}: any) {
     // tripId is the id of the trip which user have Created and he is owner of this trip
     const [tripId, setTripId] = useState<string>("");
     // loading is the state which is used to show the loading spinner
@@ -13,6 +14,7 @@ function CreateTrip() {
     // err is the state which is used to show the error alert
     const [err, setErr] = useState<any>({is: false, msg: ""});
 
+    const userName = params.userName;
     // handleSubmit is the function which is used to create the trip
     // It also set the tripId state, User use this tripId to add other freinds.
     async function handleSubmit(e: any) {
@@ -39,6 +41,13 @@ function CreateTrip() {
 
     return (
         <div>
+            <Link href="/"
+                  className="absolute top-2 right-5 inline-flex items-center justify-center mt-5 p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500   dark:text-white">
+                          <span
+                              className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
+                              {userName}
+                          </span>
+            </Link>
             <div className="mt-28 w-full flex flex-wrap justify-center items-center">
                 <form className="w-96 p-5">
                     <div className="mt-4">

@@ -6,7 +6,7 @@ import Spinner from "@/components/Spinners/Spinner";
 function PayTo({payTo, loading}: any) {
 
     return (
-        <div className="m-20">
+        <div className="mb-10">
             <h1> Pay to: </h1>
             {loading && <div className="my-3">
                 <Spinner/>

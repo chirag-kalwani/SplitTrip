@@ -14,7 +14,9 @@ expenses among friends during trips, ensuring everyone pays their fair share.
 ## Screenshots
 
 ![Main Page](/SS/ss1.png?raw=true "Optional Title")
-![Trip Page](/SS/ss2.png?raw=true "Optional Title")
+![Main Page](/SS/ss2.png?raw=true "Optional Title")
+![Main Page](/SS/ss3.png?raw=true "Optional Title")
+
 
 ## Installation
 

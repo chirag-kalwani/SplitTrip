@@ -78,7 +78,6 @@ function TableComp({d}: any) {
                                     </tr>
                                 ))
                             }
-
                             </tbody>
                         </table>
                     </>

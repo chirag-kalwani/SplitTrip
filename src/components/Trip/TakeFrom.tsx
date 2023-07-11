@@ -3,7 +3,7 @@ import Spinner from "@/components/Spinners/Spinner";
 
 function TakeFrom({takeFrom, loading}: any) {
     return (
-        <div className="m-20">
+        <div className="">
             <h1>Take from: </h1>
             {loading && <div className="my-3">
                 <Spinner/>
