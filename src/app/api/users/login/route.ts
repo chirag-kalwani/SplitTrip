@@ -4,6 +4,7 @@ import User from "@/models/UserModel";
 import {NextRequest, NextResponse} from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {cookies} from 'next/headers';
 
 export async function POST(req: NextRequest) {
     try {
@@ -36,12 +37,19 @@ export async function POST(req: NextRequest) {
         // create token
         const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: '1d'});
 
-        const response = NextResponse.json({
+        cookies().set({
+            name: 'token',
+            value: token,
+            path: '/',
+            expires: new Date(Date.now() + 86400 * 1000),
+            httpOnly: true,
+            secure: true,
+            priority: 'high',
+        });
+        return NextResponse.json({
             msg: "Login Success",
             success: true,
         }, {status: 200,});
-        response.cookies.set('token', token, {httpOnly: true});
-        return response;
     } catch (e: any) {
         return NextResponse.json({
                 msg: "Error While login",

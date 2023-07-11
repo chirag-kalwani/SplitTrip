@@ -2,7 +2,8 @@ let message: any = {
     totalExpenditureFeature: (
         <>
             <p className="m-5">
-                Here is an example to help you understand the total expenditure feature.
+                Here is an example to help you understand the total expenditure feature. Let suppose there are two
+                members m1 and m2 in a trip.
             </p>
             <p className="m-5">
                 Initially, m1 pays 1000 rs, and since it is an equal share scenario, m1's total expenditure becomes 500
@@ -14,9 +15,8 @@ let message: any = {
                 m2 to m1.
             </p>
             <p className="m-5">
-                The total expenditure feature provides an overview of how much each participant has spent throughout the
-                trip, irrespective of any outstanding debts or payments between participants. It helps in understanding
-                the individual contribution towards shared expenses and facilitates transparency in expense tracking.
+                Simply put, if you pay all your debts and take all your owed money, the amount you have spent during the
+                trip is your total expenditure.
             </p>
             <p className="m-5">
                 SplitTrip ensures accurate calculations and provides detailed reports, enabling participants to easily

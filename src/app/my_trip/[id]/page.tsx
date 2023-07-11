@@ -141,8 +141,9 @@ function MyTrip({params}: any) {
                 }
             </Link>
             {/*Headings*/}
-            <div className="flex w-[100vw] flex-wrap items-center justify-around">
-                <div>
+            <div className="flex w-[100vw] mt-20 flex-wrap items-center justify-around">
+                {/*Created By and tripid*/}
+                <div className="p-5">
                     <h3 className="mt-5">Created By: <span> {owner.userName} </span></h3>
                     <div className="flex gap-2 flex-wrap justify-around mt-5">
                         <span className=""> Trip ID: </span>
@@ -162,6 +163,7 @@ function MyTrip({params}: any) {
                                  id="copy"/>
                     </div>
                 </div>
+                {/*total expenditure*/}
                 <div className="flex flex-col">
                     <button disabled
                             className="relative inline-flex items-center justify-center mt-5 p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500   dark:text-white">
@@ -170,9 +172,10 @@ function MyTrip({params}: any) {
                               Your Total Expenditure: {currentUserExpenditures} Rs
                           </span>
                     </button>
-                    <span style={{fontSize: '10px'}}>After Clearing All Payments From Freinds</span>
-                    <span onClick={() => setHelper(true)}
-                          className="text-sm, text-blue-600 cursor-pointer hover:underline">Understand with simple example</span>
+                    <span style={{fontSize: '10px'}}>After Clearing All Payments From Freinds:
+                    <span  style={{fontSize: '10px'}} onClick={() => setHelper(true)}
+                          className="ml-2 text-blue-600 cursor-pointer hover:underline">example</span>
+                        </span>
                 </div>
             </div>
             {/* The Button Clicked open the pay modal */}

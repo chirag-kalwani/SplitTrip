@@ -20,6 +20,8 @@ function Table({params}: any) {
     const handleValueChange = (newValue: any) => {
         let startDate = new Date(newValue.startDate);
         let endDate = new Date(newValue.endDate);
+        startDate.setUTCHours(0, 0, 0, 0);
+        endDate.setUTCHours(23, 59, 59, 999);
         setValue({startDate, endDate});
     }
     useEffect(() => {
@@ -45,39 +47,42 @@ function Table({params}: any) {
 
     return (
         <div>
-            <div className="flex items-center flex-wrap justify-between">
-                <div className="w-96 p-10">
-                    {/*@ts-ignore*/}
-                    <Datepicker value={value} onChange={handleValueChange}/>
-                </div>
-                <Link href="/"
-                      className="inline-flex items-center justify-center mt-2 p-0.5 mb-2 mr-10 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500   dark:text-white">
-                    {
-                        userName === "" ?
-                            <span
-                                className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
+            <div className="w-full p-10 mt-10">
+                <h2 className="p-2">Select date range: </h2>
+                {/*@ts-ignore*/}
+                <Datepicker value={value} onChange={handleValueChange}/>
+                <p className="text-xs p-0.5">Select two dates from the calendar.</p>
+            </div>
+            <Link href="/"
+                  className="absolute top-2 right-2 inline-flex items-center justify-center mt-2 p-0.5 mb-2 mr-10 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500   dark:text-white">
+                {
+                    userName === "" ?
+                        <span
+                            className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
                         <Spinner/>
                         </span>
-                            :
-                            <span
-                                className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
+                        :
+                        <span
+                            className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md">
                               {userName}
                           </span>
-                    }
-                </Link>
+                }
+            </Link>
+            <div>
+                {
+                    isLoading ? <Spinner/> :
+                        <div className="mt-2 p-2">
+                            {
+                                data.map((d: any, i) => {
+                                    console.log(new Date(d.createdAt))
+                                    if (new Date(d.createdAt) >= value.startDate && new Date(d.createdAt) <= value.endDate)
+                                        return <TableComp key={i} d={d}/>
+                                    else return <></>
+                                })
+                            }
+                        </div>
+                }
             </div>
-            {
-                isLoading ? <Spinner/> :
-                    <div className="mt-10">
-                        {
-                            data.map((d: any, i) => {
-                                if (new Date(d.createdAt) >= value.startDate && new Date(d.createdAt) <= value.endDate)
-                                    return <TableComp key={i} d={d}/>
-                                else return <></>
-                            })
-                        }
-                    </div>
-            }
         </div>
     );
 }
