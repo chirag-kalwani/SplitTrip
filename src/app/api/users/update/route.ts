@@ -7,12 +7,12 @@ import getDataFromToken from '@/helpers/getDataFromToken/route';
 export async function POST(req: NextRequest) {
     await connect();
     try {
-        const {firstName, lastName} = await req.json();
+        const {firstName, lastName, image} = await req.json();
         const userId = await getDataFromToken(req);
         if (typeof userId === 'string') {
             const user = await User.findOne({_id: userId}).select('-password');
             if (user) {
-                const res = await User.updateOne({_id: userId}, {firstName, lastName});
+                const res = await User.updateOne({_id: userId}, {firstName, lastName, image});
                 if (res.acknowledged) {
                     return NextResponse.json({
                         msg: "user updated",

@@ -26,6 +26,7 @@ function Home() {
         getMyData().then((res) => {
             if (res.firstName === undefined) res.firstName = "";
             if (res.lastName === undefined) res.lastName = "";
+            if (!res.image) res.image = "";
             setMyData(res);
             setLoading(false);
         });
@@ -38,7 +39,8 @@ function Home() {
             {/*If Data fetched Successfully we show the MainPage Component*/}
             {/*loadingUpperPage prop use to load this page*/}
             <MainPage loadUpperPage={setLoadThisPage} email={myData.email} userName={myData.userName}
-                      name={myData.firstName + " " + myData.lastName} isEmailVerified={myData.isVerified}/>
+                      name={myData.firstName + " " + myData.lastName} isEmailVerified={myData.isVerified}
+                      image={myData.image}/>
         </>
     )
 }

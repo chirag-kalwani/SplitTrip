@@ -4,15 +4,31 @@ import Input from "@/components/Inputs/Input";
 
 function EditProfileModal({show, setShow, loadUpperPage}: any) {
     if (!show) return null;
+    const convertBase64 = (file: any) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
 
     // The Function Update the User Profile
     async function handleSubmit(e: any) {
         try {
+            let image = e.target.form[2].files[0];
+            const base64 = await convertBase64(image);
             const data = {
                 firstName: e.target.form[0].value,
                 lastName: e.target.form[1].value,
+                image: base64
             }
-            console.log(data);
             const res = await axios.post('/api/users/update', data);
             if (res.status === 200) {
                 setShow(false);

@@ -74,7 +74,6 @@ function Table({params}: any) {
                         <div className="mt-2 p-2">
                             {
                                 data.map((d: any, i) => {
-                                    console.log(new Date(d.createdAt))
                                     if (new Date(d.createdAt) >= value.startDate && new Date(d.createdAt) <= value.endDate)
                                         return <TableComp key={i} d={d}/>
                                     else return <></>

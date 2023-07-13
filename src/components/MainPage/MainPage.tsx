@@ -8,7 +8,7 @@ import JoinTripModal from "@/components/Modals/JoinTripModal";
 import {Tooltip} from 'react-tooltip';
 import Link from "next/link";
 
-function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) {
+function MainPage({email, userName, name, loadUpperPage, isEmailVerified, image}: any) {
     // States for modals to show and hide them
     const [showEditProfileModal, setShowEditProfileModal] = useState(false);
     const [showJoinTripModal, setShowJoinTripModal] = useState(false);
@@ -77,7 +77,7 @@ function MainPage({email, userName, name, loadUpperPage, isEmailVerified}: any) 
                 <div className="flex justify-start px-5 -mt-12 mb-5">
                     <span>
                         <img alt="Photo by aldi sigun on Unsplash"
-                             src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaWN0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                             src={image || "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaWN0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"}
                              className="mx-auto object-cover rounded-full h-24 w-24 bg-gray-800 p-1"/>
                     </span>
                 </div>

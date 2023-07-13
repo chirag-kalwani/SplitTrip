@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    image: {
+        type: String,
+        default: "",
+    },
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
