@@ -10,7 +10,7 @@ import AddFreindsModal from "@/components/Modals/addFreindsModal";
 
 function CreateTrip({params}: any) {
     // tripId is the id of the trip which user have Created and he is owner of this trip
-    const [tripId, setTripId] = useState<string>("64b046027b1592c3784cee95");
+    const [tripId, setTripId] = useState<string>("");
     // loading is the state which is used to show the loading spinner
     const [loading, setLoading] = useState<boolean>(false);
     // err is the state which is used to show the error alert
