@@ -1,8 +1,10 @@
-import React from 'react';
+"use client";
+import React, {useState} from 'react';
 import axios from "axios";
-import Input from "@/components/Inputs/Input";
+import Spinner from "@/components/Spinners/Spinner";
 
 function EditProfileModal({show, setShow, loadUpperPage}: any) {
+    const [loading, setLoading] = useState(false);
     if (!show) return null;
     const convertBase64 = (file: any) => {
         return new Promise((resolve, reject) => {
@@ -22,6 +24,7 @@ function EditProfileModal({show, setShow, loadUpperPage}: any) {
     // The Function Update the User Profile
     async function handleSubmit(e: any) {
         try {
+            setLoading(true);
             let image = e.target.form[2].files[0];
             const base64 = await convertBase64(image);
             const data = {
@@ -36,6 +39,8 @@ function EditProfileModal({show, setShow, loadUpperPage}: any) {
             }
         } catch (e: any) {
             console.log("Error While Updating: ", e);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -72,6 +77,9 @@ function EditProfileModal({show, setShow, loadUpperPage}: any) {
                                     id="file_input" type="file" accept="image/*"/>
                             </div>
                         </div>
+
+                        {loading && <Spinner/>}
+
                         <div className='flex justify-between'>
                             <button type="button" onClick={handleSubmit}
                                     className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Submit
